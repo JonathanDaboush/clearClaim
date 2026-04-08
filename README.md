@@ -1,82 +1,78 @@
-# ClearClaim - Enterprise E-Signature Platform
+# ClearClaim
 
-**Court-admissible, GDPR-compliant, blockchain-backed e-signatures**
-
----
-
-## 🚀 What We're Building
-
-**Enterprise e-signature platform** with full audit trail, blockchain verification, and GDPR-compliant data handling.
-
-**Only simplification:** 5-level role hierarchy → 3 roles (Admin/Member/Guest)
+**E-signature platform focused on unanimous agreement enforcement**
 
 ---
 
-## ✨ Key Features
+## 🎯 What This Is
 
-✅ **Blockchain audit logs** - Tamper-proof chain of custody  
-✅ **Line-by-line diffs** - Track every document change  
-✅ **Device fingerprinting** - Flag suspicious activity  
-✅ **Subgroup structures** - Nested project organization  
-✅ **Unanimous consent** - Enforced signature workflows  
-✅ **GDPR hybrid deletion** - EU: hard-delete | Non-EU: soft-delete  
-✅ **MFA at login** - TOTP via Google Authenticator  
-✅ **AES-256 encryption** - Data protection  
+A signing platform where **nothing gets approved unless everyone required agrees**.
+
+That's it. That's the product.
 
 ---
 
-## 📊 Project Stats
+## ✨ Core Features (MVP)
+
+✅ User accounts (email + password + 2FA)  
+✅ Projects with groups  
+✅ PDF document upload  
+✅ Participant roles (Admin/Member/Viewer)  
+✅ Signing workflow  
+✅ **Unanimous agreement enforcement**  
+✅ Basic audit log (who did what, when)  
+✅ Simple line comparison (track changes)
+
+---
+
+## 📊 MVP Stats
 
 | Metric | Value |
 |--------|-------|
-| Storage | 51 GB (1K users, 10K docs) |
-| Monthly cost | $1,500 |
-| Dev timeline | 8 months |
-| Security | Enterprise-grade |
-| Legal compliance | ESIGN, UETA, eIDAS, GDPR, PIPEDA, HIPAA |
+| **Timeline** | 6-10 weeks |
+| **Storage** | ~5 GB (1K users, 10K docs) |
+| **Cost/month** | ~$200-300 |
+| **Focus** | Working product, not perfect product |
+
+---
+
+## 🏗️ Tech Stack
+
+- **Backend:** Python 3.11+, Flask/FastAPI
+- **Database:** PostgreSQL + SQLAlchemy
+- **Auth:** JWT or sessions + TOTP (2FA)
+- **Storage:** Local or S3
 
 ---
 
 ## 📚 Documentation
 
-| File | Read Time | Purpose |
-|------|-----------|---------|
-| [START_HERE.md](START_HERE.md) | 3 min | Overview & quick start |
-| [DECISIONS.md](DECISIONS.md) | 5 min | Feature decisions & rationale |
-| [SECURITY_PLAN.md](SECURITY_PLAN.md) | 8 min | Security implementation guide |
-| [BUILD_SPEC.md](BUILD_SPEC.md) | 15 min | Complete technical specification |
-| [LEGAL.md](LEGAL.md) | 5 min | Legal compliance verification |
+| File | Purpose |
+|------|---------|
+| [START_HERE.md](START_HERE.md) | Overview & philosophy |
+| [MVP.md](MVP.md) | What we're building first |
+| [SECURITY.md](SECURITY.md) | Realistic security plan |
+| [API.md](API.md) | Technical implementation |
 
 ---
 
-## 🔒 Security Implementation
+## 🚀 Quick Start
 
-| Threat | Status | Solution |
-|--------|--------|----------|
-| SQL Injection | ✅ Solved | SQLAlchemy ORM (automatic) |
-| XSS | 📋 Ready | CSP headers + bleach + encoding |
-| CSRF | 📋 Ready | Tokens + SameSite cookies |
-| File uploads | 📋 Ready | 7-layer validation + virus scan |
+1. Read [START_HERE.md](START_HERE.md) - Product philosophy
+2. Read [MVP.md](MVP.md) - What to build first
+3. Read [SECURITY.md](SECURITY.md) - How to secure it
+4. Read [API.md](API.md) - Technical details
 
 ---
 
-## 🛠️ Tech Stack
+## ⚖️ Legal Positioning
 
-- **Backend:** Python 3.11+, Flask/FastAPI
-- **Database:** PostgreSQL 14+, SQLAlchemy 2.0+
-- **Cache:** Redis
-- **Security:** bleach, Flask-WTF, python-magic, ClamAV
-- **Storage:** S3-compatible (encrypted)
+**We say:** "Designed with compliance in mind"  
+**We don't say:** "Fully GDPR/HIPAA compliant"
 
----
-
-## 🎯 Next Steps
-
-1. Read [START_HERE.md](START_HERE.md) for overview
-2. Review [SECURITY_PLAN.md](SECURITY_PLAN.md) for implementation
-3. Follow [BUILD_SPEC.md](BUILD_SPEC.md) for development
+👉 Big difference. Keeps you out of trouble.
 
 ---
 
-**Built for:** Healthcare, Legal, Finance, and regulated industries  
-**Focus:** Security, compliance, and court-admissible evidence
+**Built for:** Teams that need unanimous agreement before proceeding  
+**Timeline:** 6-10 weeks to working product
