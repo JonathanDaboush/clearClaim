@@ -4,18 +4,13 @@ Simple decision guide for your e-signature platform.
 
 ---
 
-## ❌ REMOVE These Features
+## ❌ SIMPLIFY These Features
 
-| Feature | Why Remove? | Impact |
-|---------|-------------|--------|
-| **Blockchain audit chain** | Not legally required. Standard DB works. | Save 60% on logs |
-| **Line-by-line diffs** | Not needed. Competitors don't have it. | Save 90% on storage |
-| **5 role levels** | Too complex. 3 roles are enough. | Prevent privilege escalation bugs |
-| **Subgroups** | Memory hog. Flat structure works. | Save 100% of recursion complexity |
-| **Device trust lists** | Spoofable. Session auth is better. | Remove spoofing vulnerability |
-| **Soft-deletion** | **VIOLATES GDPR!** Must hard delete. | GDPR compliant ✅ |
-| **Unanimous consent** | Creates race conditions | Remove vulnerability |
-| **TOTP per signature** | User fatigue. MFA at login enough. | Better UX, still secure |
+| Feature | Original | Simplified | Why? |
+|---------|----------|------------|------|
+| **Role hierarchy** | 5 levels | **3 roles** (Admin/Member/Guest) | Prevent privilege escalation bugs while maintaining access control |
+
+**Note:** This is the ONLY simplification. All other features are kept at full enterprise level.
 
 ---
 
@@ -32,26 +27,43 @@ Simple decision guide for your e-signature platform.
 
 ## ✅ KEEP These Features
 
-| Feature | Why Keep? | Legal Requirement? |
-|---------|-----------|-------------------|
+| Feature | Why Keep? | Legal/Security Requirement? |
+|---------|-----------|-----------------------------|
+| **Blockchain audit logs** | Tamper-proof chain of custody | eIDAS best practice |
+| **Line-by-line file diffs** | Track all document changes | Audit compliance |
+| **Device fingerprinting** | Additional security layer | Enhanced security |
+| **Soft-deletion** | Retain for audit trail | ⚠️ **GDPR risk - use hybrid approach** |
+| **Unanimous consent** | All parties must approve | Workflow security |
+| **TOTP per signature** | Strongest authentication | eIDAS enhanced security |
+| **Subgroup structures** | Nested project organization | Enterprise feature |
 | Email + Password + TOTP | Industry standard MFA | eIDAS best practice |
-| Basic audit trail | Who signed, when, IP address | ESIGN, UETA, eIDAS |
-| AES-256 encryption | Data protection | GDPR,HIPAA |
+| Comprehensive audit trail | Who, what, when, IP, device | ESIGN, UETA, eIDAS |
+| AES-256 encryption | Data protection | GDPR, HIPAA |
 | PDF digital signatures | Tamper-evident | ESIGN, UETA, eIDAS |
-| 3 simple roles | Access control | GDPR |
-| Hard deletion | Right to be forgotten | **GDPR Article 17** |
+| 3 simple roles | Access control (simplified from 5) | GDPR |
 | PDF-only uploads | Security & consistency | Best practice |
+
+### Soft-Deletion Strategy (GDPR-compliant hybrid):
+- **EU users:** Hard-delete on request (GDPR Article 17)
+- **Non-EU users:** Soft-delete (retained for audit)
+- Track user jurisdiction at registration
+- Implement `is_deleted` flag + `deletion_type` field
 
 ---
 
-## 💾 Storage Savings (1,000 users, 10,000 docs)
+## 💾 Storage Estimate (1,000 users, 10,000 docs)
 
-| Component | Before | After | Savings |
-|-----------|--------|-------|---------|
-| Audit logs | 500 MB | 50 MB | 90% |
-| Documents | 30 GB | 10 GB | 67% |
-| Diffs | 20 GB | 0 GB | 100% |
-| **TOTAL** | **51 GB** | **10 GB** | **80%** |
+| Component | Minimal | ClearClaim (Full Enterprise) |
+|-----------|---------|------------------------------|
+| **Blockchain logs** | 50 MB | 2 GB (full chain with hashes) |
+| **Documents** | 10 GB | 10 GB |
+| **Line-by-line diffs** | 0 GB | 33 GB (all versions) |
+| **Device fingerprints** | 0 MB | 100 MB |
+| **Soft-deleted data** | 0 GB | 6 GB (7-year retention) |
+| **Subgroup metadata** | 0 MB | 50 MB (nested structures) |
+| **TOTAL** | **10 GB** | **51 GB** |
+
+**Note:** Full enterprise feature set = maximum audit trail and compliance.
 
 ---
 

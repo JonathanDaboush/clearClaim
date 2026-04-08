@@ -18,35 +18,41 @@ Why? Because **simpler = more secure + cheaper + faster**.
 
 ## What Changed
 
-### ❌ Removed
-- Blockchain audit logs
-- Line-by-line file diffs
-- 5-level role hierarchy
-- Subgroup structures
-- Device fingerprinting
-- Soft-deletion (was violating GDPR!)
-- TOTP for every signature
+### ⚠️ Only Simplification
+- 5-level role hierarchy → **3 roles only** (Admin/Member/Guest)
 
-### ✅ Kept
-- E-signatures with basic audit trail
-- Multi-factor authentication (at login)
-- Encryption
-- 3 simple roles (Admin/Member/Guest)
-- PDF documents
-- All legal requirements
+### ✅ Kept (Full Feature Set)
+- **Blockchain audit logs** (tamper-proof chain of custody)
+- **Line-by-line file diffs** (complete version tracking)
+- **Device fingerprinting** (enhanced security layer)
+- **Soft-deletion** (marked as deleted, retained for audit) ⚠️ *GDPR hybrid approach*
+- **TOTP for every signature** (strongest authentication)
+- **Unanimous consent workflow** (all parties must agree)
+- **Subgroup structures** (nested project organization)
+- E-signatures with comprehensive audit trail
+- Encryption (AES-256)
+- 3 roles (simplified from 5)
+- PDF documents with full version history
+
+### ⚠️ GDPR Consideration
+**Soft-deletion violates GDPR Article 17** (Right to Erasure) for EU users. Recommended approach:
+- **For EU users:** Hard-delete on request (GDPR compliant)
+- **For non-EU users:** Soft-delete (retained for audit)
+- Flag user region at registration to apply correct deletion policy
 
 ---
 
 ## Impact
 
-| Before | After |
-|--------|-------|
-| 51 GB storage | 10 GB storage |
-| $1,500/month | $340/month |
-| 8 months dev | 4 months dev |
-| 14 security issues | 4 to implement |
+| Metric | Minimal | ClearClaim (Full Enterprise) |
+|--------|---------|------------------------------|
+| **Storage** | 10 GB | 51 GB (blockchain + diffs + versions) |
+| **Cost/Month** | $340 | $1,500 |
+| **Dev Time** | 4 months | 8 months |
+| **Security** | Basic | **Enterprise-grade** (blockchain + fingerprinting + unanimous + subgroups) |
+| **Simplification** | Many features cut | Only role hierarchy simplified (5→3) |
 
-**Savings:** $14,000/year
+**Approach:** Full enterprise feature set with only role hierarchy simplified.
 
 ---
 

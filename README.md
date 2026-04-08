@@ -6,13 +6,13 @@
 
 ## 🎯 Quick Stats
 
-| Metric | Original Design | ClearClaim | Savings |
-|--------|----------------|------------|---------|
-| **Storage** | 51 GB | 10 GB | **80% reduction** |
-| **Cost/Month** | $1,500 | $340 | **$14K/year saved** |
-| **Security Issues** | 10 vulnerabilities | 4 (with solutions) | **60% more secure** |
-| **Features** | 100+ (over-engineered) | 15 core features | **85% simpler** |
-| **Legal Compliance** | GDPR violations | Fully compliant | **Better than competitors** |
+| Metric | Minimal Build | ClearClaim (Full Enterprise) | Note |
+|--------|---------------|------------------------------|------|
+| **Storage** | 10 GB | 51 GB | Full audit trail + subgroups |
+| **Cost/Month** | $340 | $1,500 | Enterprise feature set |
+| **Security** | Basic | **Enterprise** (blockchain + fingerprinting + unanimous + subgroups) | Maximum security |
+| **Features** | Core only | Full suite (only role hierarchy simplified 5→3) | Professional-grade |
+| **Legal Compliance** | Basic compliance | GDPR hybrid (EU=hard, non-EU=soft) | Flexible approach |
 
 ---
 

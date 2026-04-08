@@ -13,10 +13,12 @@ Simplified e-signature platform specification.
 - Password reset
 - Session management (4-hour timeout)
 
-### 2. Projects
+### 2. Projects & Subgroups
 - Create/delete projects
-- Flat structure (no subgroups)
-- Invite users to projects
+- **Nested subgroup structures** (recursive organization)
+- Move projects between subgroups
+- Inherit permissions from parent
+- Invite users to projects/subgroups
 
 ### 3. Roles (Only 3)
 - **Admin:** Full control
@@ -35,11 +37,43 @@ Simplified e-signature platform specification.
 - System records: user, timestamp, IP, document hash
 - Generate completion certificate
 
-### 6. Audit Trail
-- Append-only log (can't be modified)
-- Records: who, what, when, IP address
+### 6. Blockchain Audit Trail
+- Append-only blockchain (SHA-256 chain)
+- Each block: who, what, when, IP, device fingerprint, previous hash
+- Tamper-evident (any change breaks chain)
 - 7-year retention
-- Admins can export as CSV
+- Admins can export as CSV + verify chain integrity
+
+### 7. Document Version Control
+- Line-by-line diff tracking
+- Store all versions with diffs
+- Show changes between versions (like Git)
+- Highlight who changed what line
+
+### 8. Device Fingerprinting
+- Collect: User-Agent, screen resolution, timezone, browser plugins
+- Generate device hash (not reversible to personal data)
+- Flag when signature from unknown device
+- Require additional TOTP verification for new devices
+
+### 9. Enhanced Signature Security
+- TOTP required for EVERY signature (not just login)
+- Fresh TOTP code < 30 seconds old
+- Records TOTP verification in blockchain
+- No signature without valid TOTP
+
+### 10. Unanimous Consent Workflow
+- Document requires ALL assigned signers to approve
+- Status tracking: pending → partial → complete
+- Notification when all parties have signed
+- Cannot archive until unanimous consent achieved
+
+### 11. Data Retention (Hybrid Deletion)
+- **User region tracking:** Flag at registration (EU/non-EU)
+- **EU users:** Hard-delete on request (GDPR Article 17)
+- **Non-EU users:** Soft-delete (mark `is_deleted=true`, retain 7 years)
+- **Audit logs:** Always retained (legal requirement)
+- **Blockchain:** Immutable (deletion = marked but chain persists)
 
 ---
 
@@ -65,14 +99,18 @@ Simplified e-signature platform specification.
 
 ---
 
-## Database Schema (Simple)
+## Database Schema (Full Feature Set)
 
 ### Users
 - id, email, password_hash, totp_secret
+- **user_region** (enum: 'EU', 'non-EU') - for GDPR compliance
+- **is_deleted**, **deleted_at**, **deletion_type** (hard/soft)
 - created_at, last_login
 
 ### Projects
 - id, name, created_at
+- **parent_project_id** (NULL for root, recursive for subgroups)
+- **is_deleted**, **deleted_at**
 
 ### Project_Members
 - project_id, user_id, role
@@ -81,13 +119,35 @@ Simplified e-signature platform specification.
 ### Documents
 - id, filename, file_hash, size_bytes
 - project_id, uploaded_by, status
-- (status: 'draft', 'ready', 'signed', 'archived')
+- (status: 'draft', 'ready', 'pending_signatures', 'signed', 'archived')
+- **version_number**, **parent_version_id**
+- **requires_unanimous_consent** (boolean)
+- **is_deleted**, **deleted_at**
+
+### Document_Versions
+- id, document_id, version_number
+- file_path, file_hash, size_bytes
+- created_at, created_by
+- **line_diff** (JSON: added/removed/modified lines)
 
 ### Signatures
 - id, document_id, user_id
 - signed_at, ip_address
+- **totp_verified_at**, **device_fingerprint_hash**
 
-### Audit_Logs
+### Device_Fingerprints
+- id, user_id, device_hash
+- user_agent, screen_resolution, timezone
+- first_seen, last_seen
+- **is_trusted** (boolean)
+
+### Blockchain_Audit
+- id, block_number, previous_hash, block_hash
+- timestamp, user_id, action, resource_type, resource_id
+- ip_address, device_fingerprint_hash
+- **data_snapshot** (JSON: state before/after)
+
+### Audit_Logs (Traditional - for quick queries)
 - id, timestamp, user_id, action
 - resource_type, resource_id, ip_address
 
