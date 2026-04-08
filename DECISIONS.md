@@ -34,9 +34,8 @@ Simple decision guide for your e-signature platform.
 | **Device fingerprinting** | Additional security layer | Enhanced security |
 | **Soft-deletion** | Retain for audit trail | ⚠️ **GDPR risk - use hybrid approach** |
 | **Unanimous consent** | All parties must approve | Workflow security |
-| **TOTP per signature** | Strongest authentication | eIDAS enhanced security |
 | **Subgroup structures** | Nested project organization | Enterprise feature |
-| Email + Password + TOTP | Industry standard MFA | eIDAS best practice |
+| Email + Password + TOTP | MFA at login | eIDAS best practice |
 | Comprehensive audit trail | Who, what, when, IP, device | ESIGN, UETA, eIDAS |
 | AES-256 encryption | Data protection | GDPR, HIPAA |
 | PDF digital signatures | Tamper-evident | ESIGN, UETA, eIDAS |

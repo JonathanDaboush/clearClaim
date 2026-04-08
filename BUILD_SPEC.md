@@ -33,9 +33,10 @@ Simplified e-signature platform specification.
 
 ### 5. Signing
 - Click "Sign" button
-- Re-enter TOTP if session > 15 min old
-- System records: user, timestamp, IP, document hash
+- Re-authenticate if session > 15 min old (password)
+- System records: user, timestamp, IP, document hash, device fingerprint
 - Generate completion certificate
+- Check unanimous consent status
 
 ### 6. Blockchain Audit Trail
 - Append-only blockchain (SHA-256 chain)
@@ -54,15 +55,9 @@ Simplified e-signature platform specification.
 - Collect: User-Agent, screen resolution, timezone, browser plugins
 - Generate device hash (not reversible to personal data)
 - Flag when signature from unknown device
-- Require additional TOTP verification for new devices
+- Require password re-entry for new devices (not TOTP)
 
-### 9. Enhanced Signature Security
-- TOTP required for EVERY signature (not just login)
-- Fresh TOTP code < 30 seconds old
-- Records TOTP verification in blockchain
-- No signature without valid TOTP
-
-### 10. Unanimous Consent Workflow
+### 9. Unanimous Consent Workflow
 - Document requires ALL assigned signers to approve
 - Status tracking: pending → partial → complete
 - Notification when all parties have signed
@@ -133,7 +128,7 @@ Simplified e-signature platform specification.
 ### Signatures
 - id, document_id, user_id
 - signed_at, ip_address
-- **totp_verified_at**, **device_fingerprint_hash**
+- **device_fingerprint_hash**
 
 ### Device_Fingerprints
 - id, user_id, device_hash
@@ -224,13 +219,15 @@ GET    /audit-logs (admin only)
 
 1. User clicks "Sign" on document
 2. **Check session** (< 15 min old?)
-3. If needed: **Re-enter TOTP**
-4. **Show document** for review
-5. User clicks **"I agree to sign"**
-6. **Record signature** (user_id, timestamp, IP, doc_hash)
-7. **Update document status** (if all signed → "signed")
-8. **Generate certificate** (PDF with all signatures)
-9. **Send notifications** (email to all parties)
+3. If needed: **Re-enter password** (or re-login)
+4. **Check device fingerprint** (flag if new device)
+5. **Show document** for review
+6. User clicks **"I agree to sign"**
+7. **Record signature** (user_id, timestamp, IP, doc_hash, device fingerprint)
+8. **Add to blockchain** (immutable audit entry)
+9. **Update document status** (check unanimous consent)
+10. **Generate certificate** (if all signed)
+11. **Send notifications** (email to all parties)
 
 ---
 

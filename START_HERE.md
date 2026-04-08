@@ -26,10 +26,10 @@ Why? Because **simpler = more secure + cheaper + faster**.
 - **Line-by-line file diffs** (complete version tracking)
 - **Device fingerprinting** (enhanced security layer)
 - **Soft-deletion** (marked as deleted, retained for audit) ⚠️ *GDPR hybrid approach*
-- **TOTP for every signature** (strongest authentication)
 - **Unanimous consent workflow** (all parties must agree)
 - **Subgroup structures** (nested project organization)
 - E-signatures with comprehensive audit trail
+- MFA at login (TOTP)
 - Encryption (AES-256)
 - 3 roles (simplified from 5)
 - PDF documents with full version history
