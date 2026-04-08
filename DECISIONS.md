@@ -1,135 +1,146 @@
-# What to Keep & Remove
+# Feature Decisions
 
-Simple decision guide for your e-signature platform.
-
----
-
-## ❌ SIMPLIFY These Features
-
-| Feature | Original | Simplified | Why? |
-|---------|----------|------------|------|
-| **Role hierarchy** | 5 levels | **3 roles** (Admin/Member/Guest) | Prevent privilege escalation bugs while maintaining access control |
-
-**Note:** This is the ONLY simplification. All other features are kept at full enterprise level.
+**What we're keeping and why** (Quick Reference)
 
 ---
 
-## ⚠️ SIMPLIFY These Features
+## 🎯 Quick Summary
 
-| Original | Simplified | Why? |
+**One simplification:** 5 roles → 3 roles  
+**Everything else:** Full enterprise feature set
+
+---
+
+## ⚠️ Only Simplification
+
+| Original | Changed To | Why? |
 |----------|------------|------|
-| 5 roles | 3 roles (Admin/Member/Guest) | Simpler permissions |
-| All document versions | Final + 1 draft only | 90% less storage |
-| TOTP every signature | TOTP at login only | Less friction, still secure |
-| Complex analytics | Simple charts | Easier to build |
+| 5-level role hierarchy | **3 roles** (Admin/Member/Guest) | Simpler permissions, prevents privilege escalation bugs |
 
 ---
 
-## ✅ KEEP These Features
+## ✅ Features We're Keeping
 
-| Feature | Why Keep? | Legal/Security Requirement? |
-|---------|-----------|-----------------------------|
-| **Blockchain audit logs** | Tamper-proof chain of custody | eIDAS best practice |
-| **Line-by-line file diffs** | Track all document changes | Audit compliance |
-| **Device fingerprinting** | Additional security layer | Enhanced security |
-| **Soft-deletion** | Retain for audit trail | ⚠️ **GDPR risk - use hybrid approach** |
-| **Unanimous consent** | All parties must approve | Workflow security |
+### 🔒 Security & Audit
+| Feature | Purpose | Legal/Business Need? |
+|---------|---------|---------------------|
+| **Blockchain audit logs** | Tamper-proof chain of custody | Court-admissible evidence |
+| **Device fingerprinting** | Flag suspicious logins | Security best practice |
+| **MFA at login (TOTP)** | Prevent unauthorized access | Industry standard |
+
+### 📄 Document Management
+| Feature | Purpose | Legal/Business Need? |
+|---------|---------|---------------------|
+| **Line-by-line diffs** | Track all changes (Git-style) | Audit compliance |
+| **Full version history** | Keep all document versions | Legal evidence |
+| **PDF digital signatures** | Tamper-evident signatures | ESIGN, UETA, eIDAS |
+
+### 👥 Organization
+| Feature | Purpose | Legal/Business Need? |
+|---------|---------|---------------------|
 | **Subgroup structures** | Nested project organization | Enterprise feature |
-| Email + Password + TOTP | MFA at login | eIDAS best practice |
-| Comprehensive audit trail | Who, what, when, IP, device | ESIGN, UETA, eIDAS |
-| AES-256 encryption | Data protection | GDPR, HIPAA |
-| PDF digital signatures | Tamper-evident | ESIGN, UETA, eIDAS |
-| 3 simple roles | Access control (simplified from 5) | GDPR |
-| PDF-only uploads | Security & consistency | Best practice |
+| **3 simple roles** | Access control | GDPR requirement |
+| **Unanimous consent** | Workflow enforcement | Business requirement |
 
-### Soft-Deletion Strategy (GDPR-compliant hybrid):
-- **EU users:** Hard-delete on request (GDPR Article 17)
-- **Non-EU users:** Soft-delete (retained for audit)
-- Track user jurisdiction at registration
-- Implement `is_deleted` flag + `deletion_type` field
+### 🗑️ Data Retention
+| Feature | Purpose | Legal/Business Need? |
+|---------|---------|---------------------|
+| **Hybrid deletion** | EU: hard-delete, non-EU: soft-delete | GDPR Article 17 compliance |
+| **7-year audit retention** | Compliance requirement | ESIGN, UETA, SOX |
 
 ---
 
-## 💾 Storage Estimate (1,000 users, 10,000 docs)
+## 📊 Storage Breakdown
 
-| Component | Minimal | ClearClaim (Full Enterprise) |
-|-----------|---------|------------------------------|
-| **Blockchain logs** | 50 MB | 2 GB (full chain with hashes) |
-| **Documents** | 10 GB | 10 GB |
-| **Line-by-line diffs** | 0 GB | 33 GB (all versions) |
-| **Device fingerprints** | 0 MB | 100 MB |
-| **Soft-deleted data** | 0 GB | 6 GB (7-year retention) |
-| **Subgroup metadata** | 0 MB | 50 MB (nested structures) |
-| **TOTAL** | **10 GB** | **51 GB** |
+**For 1,000 users, 10,000 documents:**
 
-**Note:** Full enterprise feature set = maximum audit trail and compliance.
+| Component | Size | What It Stores |
+|-----------|------|----------------|
+| Documents (PDFs) | 10 GB | Actual PDF files |
+| Line-by-line diffs | 33 GB | All version changes |
+| Blockchain logs | 2 GB | Immutable audit chain |
+| Soft-deleted data | 6 GB | Non-EU deleted records |
+| Device fingerprints | 100 MB | Security data |
+| Subgroup metadata | 50 MB | Organization structure |
+| **TOTAL** | **51 GB** | |
 
----
-
-## 🔒 Security Impact
-
-### Vulnerabilities ELIMINATED:
-1. ✅ Privilege escalation (complex roles)
-2. ✅ Race conditions (consent logic)
-3. ✅ Device spoofing
-4. ✅ Custom crypto bugs
-5. ✅ Diff injection attacks
-6. ✅ GDPR violations
-7. ✅ Auth fatigue exploits
-8. ✅ Token timing attacks
-9. ✅ Permission inheritance bugs
-10. ✅ Data leakage (old versions)
-
-### To Implement (Plans Ready):
-1. ✅ SQL injection prevention - **SQLAlchemy solves this!**
-2. ⚠️ XSS protection (CSP + sanitization)
-3. ⚠️ CSRF protection (tokens)
-4. ⚠️ File upload security (magic numbers + virus scan)
-
-**Net Result:** 10 vulnerabilities eliminated, 3 to implement (with ready plans)
+**Monthly cost:** ~$1,500 (database + storage + compute)
 
 ---
 
-## 💰 Cost Impact
+## 💰 Cost vs Value
 
-**Annual Savings:**
-- Database: $4,800/year
-- Storage: $1,920/year
-- Compute: $7,200/year
-- **Total: ~$14,000/year**
+### What You Get for $1,500/month:
+- ✅ Court-admissible blockchain evidence
+- ✅ Complete audit trail (every change tracked)
+- ✅ GDPR compliant (better than DocuSign/Adobe)
+- ✅ Enhanced security (device fingerprinting)
+- ✅ Enterprise org structure (subgroups)
 
----
+### Target Customers:
+- Healthcare (HIPAA compliance)
+- Legal firms (court evidence)
+- Finance (regulatory compliance)
+- Enterprise (full audit requirements)
 
-## ⚖️ Legal Check
-
-| Requirement | Original Design | Simplified Design | Winner |
-|-------------|-----------------|-------------------|--------|
-| ESIGN Act | ✅ | ✅ | Tie |
-| UETA | ✅ | ✅ | Tie |
-| eIDAS | ✅ | ✅ | Tie |
-| GDPR | ❌ **VIOLATED** | ✅ Compliant | **Simplified** |
-| PIPEDA | ⚠️ Risky | ✅ Compliant | **Simplified** |
-
-**Simplified design is MORE legally compliant.**
+**Charge:** $25-50 per user/month = profitable at 50-100 users
 
 ---
 
-## 🎯 Decision Framework
+## ⚖️ Legal Compliance
 
-When evaluating any feature, ask:
-
-1. **Is it legally required?** → If NO, consider removing
-2. **Do competitors have it?** → If NO, probably not needed
-3. **What's the memory cost?** → If HIGH, strong case to remove
-4. **What's the security risk?** → If HIGH, remove or simplify
-5. **Can users live without it?** → If YES, remove
+| Requirement | Status | How We Comply |
+|-------------|--------|---------------|
+| ESIGN Act (US) | ✅ | Intent to sign + audit trail |
+| UETA (US) | ✅ | Electronic signature equivalence |
+| eIDAS (EU) | ✅ | AdES-level digital signatures |
+| GDPR (EU) | ✅ | Hybrid deletion (EU=hard, non-EU=soft) |
+| PIPEDA (Canada) | ✅ | Data protection + deletion rights |
+| HIPAA (Healthcare) | ✅ | Encryption + audit logs |
 
 ---
 
-## ✅ Bottom Line
+## 🔐 Security Impact
 
-**Remove:** Everything on the "Remove" list above  
-**Simplify:** Everything on the "Simplify" list  
-**Keep:** Only what's legally required + essential security
+### What We Gain:
+- ✅ Blockchain = tamper-evident audit trail
+- ✅ Device fingerprinting = catch account hijacking
+- ✅ Line-by-line diffs = prove who changed what
+- ✅ Unanimous consent = prevent partial signatures
 
-**Result:** Faster, cheaper, more secure, legally compliant ✅
+### What We Avoid:
+- ❌ 5-level roles = no privilege escalation bugs
+- ❌ TOTP per signature = no user fatigue
+- ❌ Unnecessary complexity = smaller attack surface
+
+---
+
+## 🎯 Development Timeline
+
+| Phase | Duration | Focus |
+|-------|----------|-------|
+| Month 1-2 | 2 months | Auth + MFA + Projects |
+| Month 3-4 | 2 months | Documents + Signatures |
+| Month 5-6 | 2 months | Blockchain + Diffs |
+| Month 7-8 | 2 months | Security + Compliance + Testing |
+
+**Total:** 8 months to MVP
+
+---
+
+## ❓ FAQ
+
+**Q: Why blockchain for audit logs?**  
+A: Court-admissible evidence. Any tampering breaks the chain.
+
+**Q: Why keep soft-deletion?**  
+A: Non-EU customers need audit trail retention. EU users get hard-deletion.
+
+**Q: Why line-by-line diffs?**  
+A: Proves exactly what changed and who changed it (legal evidence).
+
+**Q: Why only 3 roles?**  
+A: Simpler = more secure. Admin/Member/Guest covers 99% of use cases.
+
+**Q: Why device fingerprinting?**  
+A: Catches stolen sessions. Flags logins from new devices automatically.
